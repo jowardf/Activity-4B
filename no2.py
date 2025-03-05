@@ -1,5 +1,6 @@
 import pandas as pd
 
+# Function to load currency data from CSV file with different encodings
 def load_currency_data(file_path):
     encodings = ["latin1", "ISO-8859-1", "windows-1252"]
     for enc in encodings:
@@ -9,6 +10,7 @@ def load_currency_data(file_path):
             continue
     return None
 
+# Function to convert USD to the desired currency
 def convert_currency(amount, currency_code, df):
     row = df[df['code'] == currency_code]
     if row.empty:
@@ -18,13 +20,15 @@ def convert_currency(amount, currency_code, df):
     return amount * rate
 
 if __name__ == "__main__":
-    file_path = "currency.csv"  # Ensure currency.csv is in the same directory as the script
+    file_path = "currency.csv"
     df = load_currency_data(file_path)
 
     if df is not None:
+        # Get user input for USD amount and target currency
         amount = float(input("How much dollar do you have? "))
-        currency_code = input("What currency do you want to have? (Currency code): ").strip().upper()
+        currency_code = input("What currency do you want to have? ").strip().upper()
 
+        # Convert and display the result
         converted_amount = convert_currency(amount, currency_code, df)
 
         if converted_amount is not None:
